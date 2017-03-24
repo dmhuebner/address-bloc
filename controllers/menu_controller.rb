@@ -100,7 +100,7 @@ class MenuController
             main_menu
         when "e"
             system "clear"
-            edit_entry(edit)
+            edit_entry(entry)
             main_menu
         when "m"
             system "clear"
