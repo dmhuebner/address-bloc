@@ -13,7 +13,8 @@ class MenuController
         puts "2 - Create an entry"
         puts "3 - Search for an entry"
         puts "4 - Import entries from a CSV"
-        puts "5 - Exit"
+        puts "5 - Destroy all entries"
+        puts "6 - Exit"
         print "Enter your selection: "
 
         selection = gets.to_i
@@ -37,6 +38,11 @@ class MenuController
             read_csv
             main_menu
         when 5
+            system "clear"
+            @address_book.demolish
+            puts "All entries have been deleted!"
+            main_menu
+        when 6
             puts "Good-bye!"
             exit(0)
         else
@@ -72,20 +78,6 @@ class MenuController
         puts "New entry created!"
     end
 
-    def search_entries
-        print "Search by name: "
-        name = gets.chomp
-        match = @address_book.binary_search(name)
-        system "clear"
-
-        if match
-            puts match.to_s
-            search_submenu(match)
-        else
-            puts "No match found for #{name}"
-        end
-    end
-
     def search_submenu(entry)
         puts "\nd - delete entry"
         puts "e - edit this entry"
@@ -100,7 +92,7 @@ class MenuController
             main_menu
         when "e"
             system "clear"
-            edit_entry(edit)
+            edit_entry(entry)
             main_menu
         when "m"
             system "clear"
@@ -110,6 +102,20 @@ class MenuController
             puts "#{selection} is not a valid input"
             puts entry.to_s
             search_submenu(entry)
+        end
+    end
+
+    def search_entries
+        print "Search by name: "
+        name = gets.chomp
+        match = @address_book.binary_search(name)
+        system "clear"
+
+        if match
+            puts match.to_s
+            search_submenu(match)
+        else
+            puts "No match found for #{name}"
         end
     end
 
@@ -177,4 +183,5 @@ class MenuController
             entry_submenu(entry)
         end
     end
+
 end
